@@ -36,6 +36,30 @@
                                     </select>
                                     @include('alerts.feedback', ['field' => 'client_id'])
                                 </div>
+                                <div class="form-group{{ $errors->has('address') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-address">Address*</label>
+                                    <input type="text" name="address" id="input-address" class="form-control form-control-alternative{{ $errors->has('address') ? ' is-invalid' : '' }}" value="-">
+                                    @include('alerts.feedback', ['field' => 'address'])
+                                </div>
+                                <div class="form-group{{ $errors->has('ponumber') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-ponumber">PO number (optional)</label>
+                                    <input type="text" name="ponumber" id="input-ponumber" class="form-control form-control-alternative{{ $errors->has('ponumber') ? ' is-invalid' : '' }}" value="-">
+                                    @include('alerts.feedback', ['field' => 'ponumber'])
+                                </div>
+                                <div class="form-group{{ $errors->has('DateCreated') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-DateCreated">Date</label>
+                                    <input type="Date" name="DateCreated" id="input-DateCreated" class="form-control form-control-alternative{{ $errors->has('DateCreated') ? ' is-invalid' : '' }}">
+                                    @include('alerts.feedback', ['field' => 'DateCreated'])
+                                </div>
+                                <div class="form-group{{ $errors->has('kurang_bool') ? ' has-danger' : '' }}">
+
+                                    <label class="form-control-label" for="input-kurang_bool">Kurangin?</label>
+                                    <select name="kurang_bool" id="input-kurang_bool" class="form-control form-control-alternative{{ $errors->has('kurang_bool') ? ' is-invalid' : '' }}" required>
+                                        <option value="1" selected>Kurangin Stock Di Inventory</option>
+                                        <option value="0">TIDAK Kurangin Stock Di Inventory</option>
+                                    </select>
+                                    @include('alerts.feedback', ['field' => 'kurang_bool'])
+                                </div>
 
                                 <button type="submit" class="btn btn-success mt-4">Continue</button>
                             </div>

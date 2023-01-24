@@ -1,4 +1,4 @@
-@extends('layouts.app', ['page' => 'Sales', 'pageSlug' => 'sales', 'section' => 'transactions'])
+@extends('layouts.app', ['page' => 'Sales', 'pageSlug' => 'salesdone', 'section' => 'transactions'])
 
 @section('content')
     @include('alerts.success')
@@ -19,29 +19,37 @@
                     <div class="">
                         <table class="table">
                             <thead>
-                                <th>Date</th>
+                                <th>Date Created</th>
+                                <th>Date Finished</th>
                                 <th>Client</th>
                                 <th>User</th>
                                 <th>Products</th>
                                 <th>Total Stock</th>
                                 <th>Total Amount</th>
+                                <th>PO number</th>
                                 <th>Status</th>
                                 <th></th>
                             </thead>
                             <tbody>
                                 @foreach ($sales as $sale)
                                     <tr>
-                                        <td>{{ date('d-m-y', strtotime($sale->created_at)) }}</td>
+                                        @if($sale->DateCreated == "")
+                                            <td>{{ date('d-M-y', strtotime($sale->created_at)) }}</td>
+                                        @else
+                                            <td>{{ date('d-M-y', strtotime($sale->DateCreated)) }}</td>
+                                        @endif
+                                        <td>{{ date('d-M-y', strtotime($sale->finalized_at)) }}</td>
                                         <td><a href="{{ route('clients.show', $sale->client) }}">{{ $sale->client->name }}<br>{{ $sale->client->document_type }}-{{ $sale->client->document_id }}</a></td>
                                         <td>{{ $sale->user->name }}</td>
                                         <td>{{ $sale->products->count() }}</td>
-                                        <td>{{ $sale->products->sum('qty') }}</td>
-                                        <td>{{ format_money($sale->transactions->sum('amount')) }}</td>
+                                        <td>{{ $sale->products->sum('qty') }}<br>@if($sale->kurang_bool == "TRUE")<p>Kurang</p>@else<p>Tidak Dikurangin</p>@endif</td>
+                                        <td>{{ format_money($sale->products->sum('total_amount')) }}</td>
+                                        <td>{{ $sale->ponumber }}</td>
                                         <td>
                                             @if (!$sale->finalized_at)
-                                                <span class="text-danger">To Finalize</span>
+                                                <span class="text-danger">Not Ready</span>
                                             @else
-                                                <span class="text-success">Finalized</span>
+                                                <span class="text-success">Ready</span>
                                             @endif
                                         </td>
                                         <td class="td-actions text-right">

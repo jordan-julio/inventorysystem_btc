@@ -1,5 +1,5 @@
 @extends('layouts.app', ['page' => 'New Product', 'pageSlug' => 'products', 'section' => 'inventory'])
-
+<!--products add data-->
 @section('content')
     <div class="container-fluid mt--7">
         <div class="row">
@@ -41,10 +41,27 @@
                                     @include('alerts.feedback', ['field' => 'product_category_id'])
                                 </div>
 
-                                <div class="form-group{{ $errors->has('description') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-description">Description</label>
-                                    <input type="text" name="description" id="input-description" class="form-control form-control-alternative" placeholder="Description" value="{{ old('description') }}" required>
-                                    @include('alerts.feedback', ['field' => 'description'])
+                                <div class="row">
+                                    <div class="col-3">
+                                        <label class="form-control-label" for="input-length">Length</label>
+                                        <input type="number" name="length" id="input-length" class="form-control form-control-alternative" placeholder="Length" value="{{ old('length') }}" required>
+                                        @include('alerts.feedback', ['field' => 'length'])
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="form-control-label" for="input-width">Width</label>
+                                        <input type="number" name="width" id="input-width" class="form-control form-control-alternative" placeholder="Width" value="{{ old('width') }}" required>
+                                        @include('alerts.feedback', ['field' => 'width'])
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="form-control-label" for="input-thick">Thickness</label>
+                                        <input type="number" name="thickness" id="input-thick" class="form-control form-control-alternative" placeholder="Thickness" value="{{ old('thickness') }}" required>
+                                        @include('alerts.feedback', ['field' => 'thickness'])
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="form-control-label" for="input-weight">Weight</label>
+                                        <input type="number" name="weight" id="input-weight" class="form-control form-control-alternative" placeholder="Weight" value="{{ old('weight') }}" required>
+                                        @include('alerts.feedback', ['field' => 'weight'])
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-4">                                    
@@ -55,21 +72,24 @@
                                         </div>
                                     </div>                            
                                     <div class="col-4">                                    
-                                        <div class="form-group{{ $errors->has('stock_defective') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="input-stock_defective">Defective Stock</label>
-                                            <input type="number" name="stock_defective" id="input-stock_defective" class="form-control form-control-alternative" placeholder="Defective Stock" value="{{ old('stock_defective') }}" required>
-                                            @include('alerts.feedback', ['field' => 'stock_defective'])
+                                        <div class="form-group{{ $errors->has('color') ? ' has-danger' : '' }}">
+                                            <label class="form-control-label" for="input-color">Color</label>
+                                            <input type="text" name="color" id="input-color" class="form-control form-control-alternative" placeholder="Color" value="{{ old('color') }}" required>
+                                            @include('alerts.feedback', ['field' => 'color'])
                                         </div>
                                     </div>
                                     <div class="col-4">                                    
-                                        <div class="form-group{{ $errors->has('price') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="input-price">Price</label>
-                                            <input type="number" step=".01" name="price" id="input-price" class="form-control form-control-alternative" placeholder="Price" value="{{ old('price') }}" required>
-                                            @include('alerts.feedback', ['field' => 'price'])
+                                        <div class="form-group{{ $errors->has('quality') ? ' has-danger' : '' }}">
+                                            <label class="form-control-label" for="input-quality">Quality</label>
+                                            <select type="number" name="quality" id="input-quality" class="form-control form-control-alternative" placeholder="Quality" value="{{ old('quality') }}" required>
+                                                <option value="Good">Good</option>
+                                                <option value="Normal">Normal</option>
+                                                <option value="Bad">Bad</option>
+                                            </select>
+                                            @include('alerts.feedback', ['field' => 'quality'])
                                         </div>
-                                    </div>                            
+                                    </div>                         
                                 </div>
-
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-success mt-4">Save</button>
                                 </div>

@@ -1,5 +1,5 @@
 <?php
-
+#PRODUCTS ADD DATA
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +10,7 @@ class Product extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'name', 'description', 'product_category_id', 'price', 'stock', 'stock_defective'
+        'name', 'length', 'width', 'thickness', 'weight', 'color', 'product_category_id', 'price', 'stock', 'quality'
     ];
 
     public function category()

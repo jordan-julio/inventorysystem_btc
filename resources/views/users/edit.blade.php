@@ -42,6 +42,15 @@
                                     <label class="form-control-label" for="input-password-confirmation">{{ __('Confirm Password') }}</label>
                                     <input type="password" name="password_confirmation" id="input-password-confirmation" class="form-control form-control-alternative" placeholder="{{ __('Confirm Password') }}" value="">
                                 </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-type">Type</label>
+                                    <select name="type" id="input-type" class="form-control form-control-alternative{{ $errors->has('type') ? ' is-invalid' : '' }}" required>
+                                        <option value="{{ old('type', $user->type) }}" selected>{{ old('type', $user->type) }}</option>
+                                        <option value="super_admin">superadmin(Owner)</option>
+                                        <option value="admin">admin(Sales)</option>
+                                        <option value="member">member(Production)</option>
+                                    </select>
+                                </div>
 
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>

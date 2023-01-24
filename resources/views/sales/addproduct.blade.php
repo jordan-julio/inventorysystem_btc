@@ -25,9 +25,9 @@
                                     <select name="product_id" id="input-product" class="form-select form-control-alternative{{ $errors->has('product_id') ? ' is-invalid' : '' }}" required>
                                         @foreach ($products as $product)
                                             @if($product['id'] == old('product_id'))
-                                                <option value="{{$product['id']}}" selected>[{{ $product->category->name }}] {{ $product->name }} - Base price: {{ $product->price }}$</option>
+                                                <option value="{{$product['id']}}" selected>[{{ $product->category->name }}] {{ $product->name }} - Stock: {{ $product->stock }} - Base price: {{ $product->price }}$</option>
                                             @else
-                                                <option value="{{$product['id']}}">[{{ $product->category->name }}] {{ $product->name }} - Base price: {{ $product->price }}$</option>
+                                                <option value="{{$product['id']}}">[{{ $product->category->name }}] {{ $product->name }} - Stock: {{ $product->stock }} - Base price: Rp.{{ $product->price }}0</option>
                                             @endif
                                         @endforeach
                                     </select>
@@ -36,7 +36,7 @@
 
                                 <div class="form-group{{ $errors->has('product_id') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-price">Price per Unit</label>
-                                    <input type="number" name="price" id="input-price" step=".01" class="form-control form-control-alternative{{ $errors->has('product_id') ? ' is-invalid' : '' }}" value="0" required>
+                                    <input type="number" name="price" id="input-price" step=".01" class="form-control form-control-alternative{{ $errors->has('product_id') ? ' is-invalid' : '' }}" value="{{ old('price', $product->price) }}0" required>
                                     @include('alerts.feedback', ['field' => 'product_id'])
                                 </div>
 
@@ -48,7 +48,7 @@
 
                                 <div class="form-group{{ $errors->has('product_id') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-total">Total Amount</label>
-                                    <input type="text" name="total_amount" id="input-total" class="form-control form-control-alternative{{ $errors->has('product_id') ? ' is-invalid' : '' }}" value="0$" disabled>
+                                    <input type="text" name="total_amount" id="input-total" class="form-control form-control-alternative{{ $errors->has('product_id') ? ' is-invalid' : '' }}" value="Rp.0" disabled>
                                     @include('alerts.feedback', ['field' => 'product_id'])
                                 </div>
 
@@ -76,7 +76,7 @@
         input_qty.addEventListener('input', updateTotal);
         input_price.addEventListener('input', updateTotal);
         function updateTotal () {
-            input_total.value = (parseInt(input_qty.value) * parseFloat(input_price.value))+"$";
+            input_total.value = "Rp."+(parseInt(input_qty.value) * parseFloat(input_price.value));
         }
     </script>
 @endpush

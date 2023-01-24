@@ -2,7 +2,7 @@
     <div class="sidebar-wrapper">
         <ul class="nav">
             <li @if ($pageSlug == 'dashboard') class="active " @endif>
-                <a href="{{ route('home') }}">
+                <a href="{{ route('dashboard.stats') }}">
                     <i class="tim-icons icon-chart-bar-32"></i>
                     <p>Dashboard</p>
                 </a>
@@ -10,7 +10,7 @@
             <li>
                 <a data-toggle="collapse" href="#transactions" {{ $section == 'transactions' ? 'aria-expanded=true' : '' }}>
                     <i class="tim-icons icon-bank" ></i>
-                    <span class="nav-link-text">Transactions</span>
+                    <span class="nav-link-text">Order</span>
                     <b class="caret mt-1"></b>
                 </a>
 
@@ -28,10 +28,16 @@
                                 <p>All</p>
                             </a>
                         </li>
-                        <li @if ($pageSlug == 'sales') class="active " @endif>
+                        <li @if ($pageSlug == 'salesdone') class="active " @endif>
                             <a href="{{ route('sales.index')  }}">
                                 <i class="tim-icons icon-bag-16"></i>
-                                <p>Sales</p>
+                                <p>Finish Order</p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug == 'salesnotdone') class="active " @endif>
+                            <a href="{{ route('salesnd.index')  }}">
+                                <i class="tim-icons icon-bag-16"></i>
+                                <p>Ongoing Order</p>
                             </a>
                         </li>
                         <li @if ($pageSlug == 'expenses') class="active " @endif>
@@ -79,8 +85,14 @@
                         </li>
                         <li @if ($pageSlug == 'products') class="active " @endif>
                             <a href="{{ route('products.index') }}">
-                                <i class="tim-icons icon-notes"></i>
+                                <i class="tim-icons icon-bag-16"></i>
                                 <p>Products</p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug == 'productsadd') class="active " @endif>
+                            <a href="{{ route('productsadd.index') }}">
+                                <i class="tim-icons icon-notes"></i>
+                                <p>Production Record</p>
                             </a>
                         </li>
                         <li @if ($pageSlug == 'categories') class="active " @endif>
@@ -98,7 +110,41 @@
                     </ul>
                 </div>
             </li>
-
+            <li>
+                <a data-toggle="collapse" href="#material" {{ $section == 'material' ? 'aria-expanded=true' : '' }}>
+                    <i class="tim-icons icon-app"></i>
+                    <span class="nav-link-text">Material</span>
+                    <b class="caret mt-1"></b>
+                </a>
+                <div class="collapse {{ $section == 'material' ? 'show' : '' }}" id="material">
+                    <ul class="nav pl-4">
+                        <li @if ($pageSlug == 'homematerials') class="active " @endif>
+                            <a href="{{ route('inventory.material.home') }}">
+                                <i class="tim-icons icon-bag-16"></i>
+                                <p>Home</p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug == 'material') class="active " @endif>
+                            <a href="{{ route('inventory.material.index') }}">
+                                <i class="tim-icons icon-cart"></i>
+                                <p>Purchase Material</p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug == 'materialuse') class="active " @endif>
+                            <a href="{{ route('materialused.index') }}">
+                                <i class="tim-icons icon-cart"></i>
+                                <p>Material Use</p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug == 'matsearch') class="active " @endif>
+                            <a href="{{ route('materials.index') }}">
+                                <i class="tim-icons icon-cart"></i>
+                                <p>Material Use Search</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
             <li @if ($pageSlug == 'clients') class="active " @endif>
                 <a href="{{ route('clients.index') }}">
                     <i class="tim-icons icon-single-02"></i>
@@ -176,6 +222,12 @@
                         </li>
                     </ul>
                 </div>
+            </li>
+            <li @if ($pageSlug == 'custominvoice') class="active " @endif>
+                <a href="{{ route('invoice.index') }}">
+                    <i class="tim-icons icon-delivery-fast"></i>
+                    <p>Bikin Invoice</p>
+                </a>
             </li>
         </ul>
     </div>

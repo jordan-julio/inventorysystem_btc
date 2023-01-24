@@ -40,6 +40,14 @@
                                     <label class="form-control-label" for="input-password-confirmation">{{ __('Confirm Password') }}</label>
                                     <input type="password" name="password_confirmation" id="input-password-confirmation" class="form-control form-control-alternative" placeholder="{{ __('Confirm Password') }}" value="" required>
                                 </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-type">Type</label>
+                                    <select name="type" id="input-type" class="form-control form-control-alternative{{ $errors->has('type') ? ' is-invalid' : '' }}" required>
+                                        <option value="super_admin" selected>Owner</option>
+                                        <option value="admin">Sales</option>
+                                        <option value="member">Production</option>
+                                    </select>
+                                </div>
 
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>

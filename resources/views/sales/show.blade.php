@@ -40,6 +40,7 @@
                             <th>products</th>
                             <th>Total Stock</th>
                             <th>Total Cost</th>
+                            <th>Address</th>
                             <th>Status</th>
                         </thead>
                         <tbody>
@@ -51,6 +52,7 @@
                                 <td>{{ $sale->products->count() }}</td>
                                 <td>{{ $sale->products->sum('qty') }}</td>
                                 <td>{{ format_money($sale->products->sum('total_amount')) }}</td>
+                                <td>{{ $sale->address }}</td>
                                 <td>{!! $sale->finalized_at ? 'Completed at<br>'.date('d-m-y', strtotime($sale->finalized_at)) : (($sale->products->count() > 0) ? 'TO FINALIZE' : 'ON HOLD') !!}</td>
                             </tr>
                         </tbody>
@@ -116,7 +118,32 @@
                 </div>
             </div>
         </div>
-    </div>
+        <div class="card">
+            <div class="card-header">
+                <form method='get' action="{{ route('sales.invoice', $sale) }}">
+                    <div class="row">
+                        <div class="col-8">
+                        <a href="{{ route('sales.invoice', $sale->id) }}" class="btn btn-sm btn-primary">PDF Invoice</a>
+                        </div>
+                    </div>
+                </form>
+                <form method='get' action="{{ route('sales.suratpo', $sale) }}">
+                    <div class="row">
+                        <div class="col-8">
+                            <a href="{{ route('sales.suratpo', $sale->id) }}" class="btn btn-sm btn-primary">PDF PO</a>
+                        </div>
+                    </div>
+                </form>
+                <!--error invoice fpdf cannot require-->
+                <form method='get' action="{{ route('sales.suratkirim', $sale) }}">
+                    <div class="row">
+                        <div class="col-8">
+                            <a href="{{ route('sales.suratkirim', $sale->id) }}" class="btn btn-sm btn-primary">PDF Surat Kirim</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
 @endsection
 
 @push('js')

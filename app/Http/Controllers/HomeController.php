@@ -24,7 +24,7 @@ class HomeController extends Controller
         $anualclients = $this->getAnnualClients();
         $anualproducts = $this->getAnnualProducts();
         
-        return view('dashboard', [
+        return view('home', [
             'monthlybalance'            => $monthlyBalance,
             'monthlybalancebymethod'    => $monthlyBalanceByMethod,
             'lasttransactions'          => Transaction::latest()->limit(20)->get(),
@@ -128,3 +128,4 @@ class HomeController extends Controller
         return collect(compact('lastmonths', 'lastincomes', 'lastexpenses', 'semesterincomes', 'semesterexpenses'));
     }
 }
+

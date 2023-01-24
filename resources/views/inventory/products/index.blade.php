@@ -1,6 +1,7 @@
 @extends('layouts.app', ['page' => 'List of Products', 'pageSlug' => 'products', 'section' => 'inventory'])
 
 @section('content')
+-webkit-text-size-adjust: none;
     <div class="row">
         <div class="col-md-12">
             <div class="card ">
@@ -22,10 +23,16 @@
                             <thead class=" text-primary">
                                 <th scope="col">Category</th>
                                 <th scope="col">Product</th>
-                                <th scope="col">Base Price</th>
+                                <th scope="col">Length</th>
+                                <th scope="col">Width</th>
+                                <th scope="col">Thickness</th>
+                                <th scope="col">Weight</th>
+                                <th scope="col">Density</th>
+                                <!--<th scope="col">Base Price</th>-->
                                 <th scope="col">Stock</th>
-                                <th scope="col">Faulty</th>
                                 <th scope="col">Total Sold</th>
+                                <th scope="col">Color</th>
+                                <th scope="col">Quality</th>
                                 <th scope="col"></th>
                             </thead>
                             <tbody>
@@ -33,10 +40,16 @@
                                     <tr>
                                         <td><a href="{{ route('categories.show', $product->category) }}">{{ $product->category->name }}</a></td>
                                         <td>{{ $product->name }}</td>
-                                        <td>{{ format_money($product->price) }}</td>
-                                        <td>{{ $product->stock }}</td>
-                                        <td>{{ $product->stock_defective }}</td>
+                                        <td>{{ $product->length }}</td>
+                                        <td>{{ $product->width }}</td>
+                                        <td>{{ $product->thickness }}</td>
+                                        <td>{{ $product->weight }}</td>
+                                        <td>{{ $product->density }}</td>
+                                        <!--<td>{{ format_money($product->price) }}</td>-->
+                                        <td>{{ $product->stock }}</td> 
                                         <td>{{ $product->solds->sum('qty') }}</td>
+                                        <td>{{ $product->color }}</td>
+                                        <td>{{ $product->quality }}</td>
                                         <td class="td-actions text-right">
                                             <a href="{{ route('products.show', $product) }}" class="btn btn-link" data-toggle="tooltip" data-placement="bottom" title="More Details">
                                                 <i class="tim-icons icon-zoom-split"></i>

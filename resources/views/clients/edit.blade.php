@@ -30,12 +30,12 @@
                                 <div class="row">
                                     <div class="col-1">
                                         <label class="form-control-label" for="input-document_type">{{ __('Type') }}</label>
-                                        <select name="document_type" id="input-document_type" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" required>
-                                            @foreach (['V', 'E', 'P', 'RIF'] as $document_type)
+                                        <select name="document_type" id="input-document_type" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}">
+                                            @foreach ([' ','V', 'X'] as $document_type)
                                                 @if($document_type == old('document') or $document_type == $client->document_type)
-                                                    <option value="{{$document_type}}" selected>{{$document_type}}</option>
+                                                    <option value="-" selected>{{$document_type}}</option>
                                                 @else
-                                                    <option value="{{$document_type}}">{{$document_type}}</option>
+                                                    <option value="-">{{$document_type}}</option>
                                                 @endif
                                             @endforeach
 
@@ -43,7 +43,7 @@
                                     </div>
                                     <div class="col">
                                         <label class="form-control-label" for="input-document_id">{{ __('Document Number') }}</label>
-                                        <input type="text" name="document_id" id="input-document_id" class="form-control form-control-alternative{{ $errors->has('document_id') ? ' is-invalid' : '' }}" placeholder="{{ __('Document Number') }}" value="{{ old('document_id', $client->document_id) }}" required>
+                                        <input type="text" name="document_id" id="input-document_id" class="form-control form-control-alternative{{ $errors->has('document_id') ? ' is-invalid' : '' }}" placeholder="{{ __('Document Number') }}" value="-">
                                         @include('alerts.feedback', ['field' => 'document_id'])
 
                                     </div>

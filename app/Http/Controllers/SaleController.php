@@ -10,6 +10,7 @@ use App\SoldProduct;
 use App\Transaction;
 use App\PaymentMethod;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SaleController extends Controller
 {
@@ -20,7 +21,7 @@ class SaleController extends Controller
      */
     public function index()
     {
-        $sales = Sale::latest()->paginate(25);
+        $sales = Sale::whereNotNull('finalized_at')->latest()->paginate(25);
 
         return view('sales.index', compact('sales'));
 
@@ -47,6 +48,7 @@ class SaleController extends Controller
     public function store(Request $request, Sale $model)
     {
         $existent = Sale::where('client_id', $request->get('client_id'))->where('finalized_at', null)->get();
+        
 
         if($existent->count()) {
             return back()->withError('There is already an unfinished sale belonging to this customer. <a href="'.route('sales.show', $existent->first()).'">Click here to go to it</a>');
@@ -70,6 +72,22 @@ class SaleController extends Controller
         return view('sales.show', ['sale' => $sale]);
     }
 
+    public function invoice(Sale $sale)
+    {
+        
+        return view('sales.invoice', ['sale' => $sale]);
+    }
+    public function suratpo(Sale $sale)
+    {
+        
+        return view('sales.suratpo', ['sale' => $sale]);
+    }
+    public function suratkirim(Sale $sale)
+    {
+        
+        return view('sales.suratkirim', ['sale' => $sale]);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -78,6 +96,15 @@ class SaleController extends Controller
      */
     public function destroy(Sale $sale)
     {
+        if ($sale->kurang_bool) {
+            foreach($sale->products as $sold_product) {
+                $productid = $sold_product->product_id;
+                $qtyToAdd = $sold_product->qty;
+                $product = Product::find($productid);
+                $product->stock += $qtyToAdd;
+                $product->save();
+            };
+        }
         $sale->delete();
 
         return redirect()
@@ -88,22 +115,31 @@ class SaleController extends Controller
     public function finalize(Sale $sale)
     {
         $sale->total_amount = $sale->products->sum('total_amount');
-
+        $kurang_bool = $sale->kurang_bool;
+        if ($kurang_bool == TRUE) {
         foreach ($sale->products as $sold_product) {
             $product_name = $sold_product->product->name;
             $product_stock = $sold_product->product->stock;
             if($sold_product->qty > $product_stock) return back()->withError("The product '$product_name' does not have enough stock. Only has $product_stock units.");
         }
-
+        
         foreach ($sale->products as $sold_product) {
             $sold_product->product->stock -= $sold_product->qty;
             $sold_product->product->save();
+            
+        }
+            $sale->finalized_at = Carbon::now()->toDateTimeString();
+            $sale->client->balance -= $sale->total_amount;
+            $sale->save();
+            $sale->client->save();}
+        else{
+            $sale->finalized_at = Carbon::now()->toDateTimeString();
+            $sale->client->balance -= $sale->total_amount;
+            $sale->save();
+            $sale->client->save();
         }
 
-        $sale->finalized_at = Carbon::now()->toDateTimeString();
-        $sale->client->balance -= $sale->total_amount;
-        $sale->save();
-        $sale->client->save();
+
 
         return back()->withStatus('The sale has been successfully completed.');
     }
@@ -145,6 +181,7 @@ class SaleController extends Controller
     public function destroyproduct(Sale $sale, SoldProduct $soldproduct)
     {
         $soldproduct->delete();
+
 
         return back()->withStatus('The product has been disposed of successfully.');
     }
